@@ -3,362 +3,159 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>OnkoTaxi MVP Stable</title>
+<title>OnkoTaxi MVP PRO</title>
 <style>
-:root{--navy:#063047;--teal:#009b92;--red:#ff3542;--line:#dfeaed;--muted:#657789;--bg:#f3faf9}
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:linear-gradient(#fff,#eef8f7);color:#042336}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-.top{height:74px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:white;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
-.logo{font-size:34px;font-weight:950;letter-spacing:-1px;color:#073e4b;line-height:.8}.logo span{color:var(--teal)}
-.tag{font-size:10px;color:var(--teal);font-weight:900;letter-spacing:1.3px;margin-top:8px}
-.tabs{display:flex;gap:8px;background:#eef6f6;padding:6px;border-radius:999px}
-.tabs button{border:0;background:transparent;border-radius:999px;padding:10px 18px;font-weight:900;color:var(--navy)}
-.tabs button.active{background:var(--navy);color:white}
-.wrap{max-width:1440px;margin:auto;padding:30px}
-.btn{border:0;border-radius:14px;padding:14px 18px;background:linear-gradient(135deg,#087e78,var(--teal));color:white;font-weight:950}
-.btn.secondary{background:white;color:#087e78;border:1.5px solid var(--teal)}
-.btn.red{background:linear-gradient(135deg,#d71922,var(--red))}
-.btn.gray{background:#f5faf9;color:#063047;border:1px solid var(--line)}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1050px;margin:35px auto}
-.card{background:white;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 12px 30px rgba(6,48,71,.08)}
-.role{text-align:center;padding:34px}.role .emoji{font-size:52px}
-.layout{display:grid;grid-template-columns:430px 1fr;gap:34px;align-items:start}
-.phone{width:390px;height:844px;border:10px solid #101820;border-radius:40px;background:white;overflow:hidden;position:relative;margin:auto;box-shadow:0 28px 80px rgba(0,0,0,.22)}
-.phone:before{content:"";position:absolute;top:8px;left:50%;transform:translateX(-50%);width:110px;height:28px;background:#101820;border-radius:999px;z-index:3}
-.status{height:42px;display:flex;justify-content:space-between;padding:12px 22px 0;font-size:12px;font-weight:900}
-.mhead{height:74px;display:flex;align-items:center;justify-content:space-between;padding:8px 20px}
-.mlogo{font-size:28px;font-weight:950;color:#073e4b}.mlogo span{color:var(--teal)}
-.mtag{font-size:7px;color:var(--teal);font-weight:900}
-.icon{width:40px;height:40px;border:1px solid var(--line);border-radius:14px;background:white}
-.content{position:absolute;top:116px;bottom:76px;left:0;right:0;padding:0 20px 18px;overflow:auto}
-.bottom{position:absolute;bottom:0;left:0;right:0;height:76px;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:8px;background:white}
-.nav{border:0;background:transparent;color:#68798a;font-size:10px;font-weight:900;display:flex;flex-direction:column;align-items:center;gap:4px}.nav b{font-size:20px}.nav.active{color:var(--teal)}
-.field{border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:12px;background:white}
-.field label{display:block;color:var(--muted);font-size:11px;font-weight:900;margin-bottom:4px}
-.field input,.field select,.field textarea{border:0;outline:0;width:100%;font-weight:850;background:transparent}
-.field textarea{min-height:70px;resize:none}
-.tile{border:1px solid var(--line);border-radius:18px;padding:16px;background:white;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
-.tile.green{background:linear-gradient(135deg,#087e78,var(--teal));color:white;border:0}.tile.red{background:linear-gradient(135deg,#d71922,var(--red));color:white;border:0}
-.progress{height:5px;background:#e6eeee;border-radius:999px;margin:8px 0 20px}.progress b{display:block;height:100%;background:var(--teal)}
-.success{width:110px;height:110px;border-radius:50%;background:#e8f7f5;display:grid;place-items:center;font-size:54px;color:var(--teal);margin:24px auto}
-.ad{height:132px;border-radius:18px;color:white;padding:16px;margin:12px 0 18px;position:relative;overflow:hidden;background-size:cover;background-position:center;box-shadow:0 12px 26px rgba(0,0,0,.22)}
-.ad:before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(0,0,0,.78),rgba(0,0,0,.18))}
-.ad>*{position:relative}.ad h3{font-size:22px;line-height:1.05;margin:5px 0}.ad small{font-size:10px;font-weight:900}.ad p{margin:0;font-weight:800}
-.ad.car{background-image:url('https://images.unsplash.com/photo-1549924231-f129b911e442?q=80&w=1600&auto=format&fit=crop')}
-.ad.health{background-image:url('https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=1600&auto=format&fit=crop')}
-.ad.pharma{background-image:url('https://images.unsplash.com/photo-1576602976047-174e57a47881?q=80&w=1600&auto=format&fit=crop')}
-.map{height:250px;border-radius:20px;border:1px solid var(--line);background:linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),#e8f0ee;background-size:48px 48px;position:relative;overflow:hidden}
-.route{position:absolute;left:60px;top:125px;width:220px;height:85px;border-left:6px solid var(--teal);border-bottom:6px solid var(--teal);border-radius:0 0 0 30px;transform:skewX(-18deg)}
-.pin{position:absolute;width:30px;height:30px;background:var(--red);border-radius:50% 50% 50% 0;transform:rotate(-45deg);right:52px;top:90px}.carIcon{position:absolute;left:150px;top:158px;font-size:30px}
-.badge{display:inline-flex;padding:6px 10px;border-radius:999px;background:#e8f7f5;color:#087e78;font-size:12px;font-weight:950}.badge.red{background:#ffe7e9;color:#d71922}.badge.blue{background:#e8f1ff;color:#1c63c7}
-.hidden{display:none!important}
-.admin{display:grid;grid-template-columns:250px 1fr;min-height:calc(100vh - 74px)}
-.side{background:linear-gradient(#07324a,#052536);color:white;padding:24px}
-.side .logo{font-size:30px;color:white}.side .tag{font-size:8px}
-.menu{display:flex;flex-direction:column;gap:8px;margin-top:26px}.menu button{border:0;background:transparent;color:#e1edf0;text-align:left;padding:12px 14px;border-radius:13px;font-weight:900}.menu button.active{background:rgba(255,255,255,.16)}
-.main{padding:28px;overflow:auto}.toolbar{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:18px}.actions{display:flex;gap:10px;flex-wrap:wrap}.small{border:0;border-radius:12px;padding:10px 14px;font-weight:900;background:var(--teal);color:white}.small.gray{background:white;color:var(--navy);border:1px solid var(--line)}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:18px}.kpi{background:white;border:1px solid var(--line);border-radius:18px;padding:16px}.kpi small{color:var(--muted);font-weight:900;text-transform:uppercase;font-size:11px}.kpi strong{font-size:28px;color:var(--teal);display:block;margin-top:6px}
-.dash{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.table{width:100%;border-collapse:collapse;background:white;border:1px solid var(--line);border-radius:18px;overflow:hidden}.table th,.table td{padding:13px 14px;border-bottom:1px solid var(--line);text-align:left;font-size:14px}.table th{font-size:12px;text-transform:uppercase;color:var(--muted);background:#f8fbfb}
-.adminMap{height:430px;border-radius:22px;background:radial-gradient(circle at 65% 45%,rgba(255,53,66,.14) 0 58px,transparent 60px),linear-gradient(90deg,rgba(255,255,255,.55) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.55) 1px,transparent 1px),#e8f0ee;background-size:auto,56px 56px,56px 56px;border:1px solid var(--line);position:relative}.dot{position:absolute;width:38px;height:38px;border-radius:50%;background:var(--teal);color:white;display:grid;place-items:center;font-size:20px}.dot.red{background:var(--red)}
-.chart{height:230px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(#fff,#f8fbfb);position:relative}.bar{position:absolute;bottom:40px;width:34px;border-radius:10px 10px 0 0;background:linear-gradient(var(--teal),#57d6ca)}
-.settings{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-@media(max-width:980px){.layout,.admin,.dash,.settings,.grid3{grid-template-columns:1fr}.side{display:none}.kpis{grid-template-columns:1fr 1fr}.top{height:auto;flex-wrap:wrap;padding:14px}.phone{border:0;border-radius:0;width:100vw;height:100vh}.tabs{overflow:auto}}
+:root{--navy:#07324a;--navy2:#041f31;--teal:#079c95;--teal2:#087e78;--red:#ef3340;--line:#dce8ea;--muted:#607587;--bg:#f3faf9;--shadow:0 18px 45px rgba(6,48,71,.12)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:linear-gradient(#fff,#eff8f7);color:var(--navy2)}button,input,select,textarea{font:inherit}button{cursor:pointer}
+.top{height:74px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:white;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}.logo{font-size:34px;font-weight:950;letter-spacing:-1.3px;color:#073e4b;line-height:.8}.logo span{color:var(--teal)}.tag{font-size:10px;color:var(--teal);font-weight:900;letter-spacing:1.35px;margin-top:8px}.tabs{display:flex;gap:8px;background:#edf6f6;padding:6px;border-radius:999px}.tabs button{border:0;background:transparent;color:var(--navy);border-radius:999px;padding:10px 20px;font-weight:900}.tabs button.active{background:var(--navy);color:white}
+.wrap{max-width:1450px;margin:auto;padding:30px}.hidden{display:none!important}.btn{border:0;border-radius:14px;padding:14px 18px;background:linear-gradient(135deg,var(--teal2),var(--teal));color:white;font-weight:950;box-shadow:0 12px 24px rgba(7,156,149,.18)}.btn.full{width:100%}.btn.secondary{background:white;color:var(--teal2);border:1.5px solid var(--teal);box-shadow:none}.btn.red{background:linear-gradient(135deg,#d71922,var(--red))}.btn.gray{background:#f8fbfb;color:var(--navy);border:1px solid var(--line);box-shadow:none}.small{border:0;border-radius:12px;padding:10px 14px;font-weight:900;background:var(--teal);color:white}.small.gray{background:white;color:var(--navy);border:1px solid var(--line)}
+.hero{text-align:center;padding:30px 0 10px}.hero h1{font-size:34px;margin:0 0 14px}.hero p{color:var(--muted);font-weight:750}.roleGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1070px;margin:30px auto}.role{background:white;border:1px solid var(--line);border-radius:24px;padding:34px;text-align:center;box-shadow:var(--shadow)}.proIcon{width:72px;height:72px;border-radius:22px;background:linear-gradient(135deg,#08324b,#0b6270);display:grid;place-items:center;margin:0 auto 18px;color:white}.proIcon svg{width:38px;height:38px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}.role h2{margin:8px 0 10px;font-size:26px}.role p{min-height:48px}
+.layout{display:grid;grid-template-columns:430px 1fr;gap:34px;align-items:start}.phone{width:390px;height:844px;border:10px solid #101820;border-radius:42px;background:white;overflow:hidden;position:relative;margin:auto;box-shadow:0 28px 80px rgba(0,0,0,.24)}.phone:before{content:"";position:absolute;top:8px;left:50%;transform:translateX(-50%);width:110px;height:28px;background:#101820;border-radius:999px;z-index:4}.status{height:42px;display:flex;justify-content:space-between;padding:12px 22px 0;font-size:12px;font-weight:900}.mhead{height:74px;display:flex;align-items:center;justify-content:space-between;padding:8px 20px}.mlogo{font-size:28px;font-weight:950;color:#073e4b}.mlogo span{color:var(--teal)}.mtag{font-size:7px;color:var(--teal);font-weight:900;letter-spacing:.8px}.iconBtn{width:40px;height:40px;border:1px solid var(--line);border-radius:14px;background:white;color:var(--navy);display:grid;place-items:center}.iconBtn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.content{position:absolute;top:116px;bottom:76px;left:0;right:0;padding:0 20px 18px;overflow:auto}.bottom{position:absolute;bottom:0;left:0;right:0;height:76px;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:8px;background:white}.nav{border:0;background:transparent;color:#6a7b8c;font-size:10px;font-weight:900;display:flex;flex-direction:column;align-items:center;gap:4px}.nav.active{color:var(--teal)}.nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.card{background:white;border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 8px 18px rgba(6,48,71,.05);margin-bottom:14px}.field{border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:12px;background:white}.field label{display:block;color:var(--muted);font-size:11px;font-weight:900;margin-bottom:4px}.field input,.field select,.field textarea{border:0;outline:0;width:100%;font-weight:850;background:transparent;color:var(--navy2)}.field textarea{min-height:70px;resize:none}.tile{border:1px solid var(--line);border-radius:18px;padding:16px;background:white;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}.tile.green{background:linear-gradient(135deg,var(--teal2),var(--teal));color:white;border:0}.tile.red{background:linear-gradient(135deg,#d71922,var(--red));color:white;border:0}.progress{height:5px;background:#e7eeee;border-radius:999px;margin:8px 0 20px;overflow:hidden}.progress b{display:block;height:100%;background:var(--teal)}.success{width:110px;height:110px;border-radius:50%;background:#e8f7f5;display:grid;place-items:center;font-size:54px;color:var(--teal);margin:24px auto}.muted{color:var(--muted);font-weight:750}.badge{display:inline-flex;padding:6px 10px;border-radius:999px;background:#e8f7f5;color:#087e78;font-size:12px;font-weight:950}.badge.red{background:#ffe7e9;color:#d71922}.badge.blue{background:#e8f1ff;color:#1c63c7}
+.ad{height:132px;border-radius:18px;color:white;padding:16px;margin:12px 0 18px;position:relative;overflow:hidden;background-size:cover;background-position:center;box-shadow:0 12px 26px rgba(0,0,0,.22)}.ad:before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(0,0,0,.78),rgba(0,0,0,.16))}.ad>*{position:relative}.ad h3{font-size:22px;line-height:1.05;margin:5px 0}.ad small{font-size:10px;font-weight:900;letter-spacing:.6px}.ad p{margin:0;font-weight:800}.ad.car{background-image:url('https://images.unsplash.com/photo-1549924231-f129b911e442?q=80&w=1600&auto=format&fit=crop')}.ad.med{background-image:url('https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=1600&auto=format&fit=crop')}.ad.pharma{background-image:url('https://images.unsplash.com/photo-1576602976047-174e57a47881?q=80&w=1600&auto=format&fit=crop')}
+.map{height:250px;border-radius:20px;border:1px solid var(--line);background:linear-gradient(90deg,rgba(255,255,255,.55) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.55) 1px,transparent 1px),#e8f0ee;background-size:48px 48px;position:relative;overflow:hidden}.route{position:absolute;left:60px;top:125px;width:220px;height:85px;border-left:6px solid var(--teal);border-bottom:6px solid var(--teal);border-radius:0 0 0 30px;transform:skewX(-18deg)}.pin{position:absolute;width:30px;height:30px;background:var(--red);border-radius:50% 50% 50% 0;transform:rotate(-45deg);right:52px;top:90px}.carIcon{position:absolute;left:150px;top:158px;font-size:30px}.sos{position:absolute;right:18px;bottom:92px;width:62px;height:62px;border-radius:50%;background:var(--red);color:white;border:0;font-weight:950;box-shadow:0 12px 28px rgba(239,51,64,.42);display:none;z-index:12}.sos.show{display:block}
+.admin{display:grid;grid-template-columns:250px 1fr;min-height:calc(100vh - 74px)}.side{background:linear-gradient(#07324a,#052536);color:white;padding:24px}.side .logo{font-size:30px;color:white}.side .tag{font-size:8px}.menu{display:flex;flex-direction:column;gap:8px;margin-top:26px}.menu button{border:0;background:transparent;color:#e1edf0;text-align:left;padding:12px 14px;border-radius:13px;font-weight:900}.menu button.active{background:rgba(255,255,255,.16)}.main{padding:28px;overflow:auto}.toolbar{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:18px}.actions{display:flex;gap:10px;flex-wrap:wrap}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:18px}.kpi{background:white;border:1px solid var(--line);border-radius:18px;padding:16px}.kpi small{color:var(--muted);font-weight:900;text-transform:uppercase;font-size:11px}.kpi strong{font-size:28px;color:var(--teal);display:block;margin-top:6px}.dash{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.table{width:100%;border-collapse:collapse;background:white;border:1px solid var(--line);border-radius:18px;overflow:hidden}.table th,.table td{padding:13px 14px;border-bottom:1px solid var(--line);text-align:left;font-size:14px}.table th{font-size:12px;text-transform:uppercase;color:var(--muted);background:#f8fbfb}.adminMap{height:430px;border-radius:22px;background:radial-gradient(circle at 65% 45%,rgba(239,51,64,.14) 0 58px,transparent 60px),linear-gradient(90deg,rgba(255,255,255,.55) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.55) 1px,transparent 1px),#e8f0ee;background-size:auto,56px 56px,56px 56px;border:1px solid var(--line);position:relative}.dot{position:absolute;width:38px;height:38px;border-radius:50%;background:var(--teal);color:white;display:grid;place-items:center;font-size:20px}.dot.red{background:var(--red)}.chart{height:230px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(#fff,#f8fbfb);position:relative}.bar{position:absolute;bottom:40px;width:34px;border-radius:10px 10px 0 0;background:linear-gradient(var(--teal),#57d6ca)}.settings{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:980px){.layout,.admin,.dash,.settings,.roleGrid{grid-template-columns:1fr}.side{display:none}.kpis{grid-template-columns:1fr 1fr}.top{height:auto;flex-wrap:wrap;padding:14px}.phone{border:0;border-radius:0;width:100vw;height:100vh}.tabs{overflow:auto}}
 </style>
 </head>
 <body>
 <header class="top">
   <div><div class="logo">Onko<span>Taxi</span></div><div class="tag">RAZEM W DRODZE DO ZDROWIA</div></div>
   <nav class="tabs">
-    <button class="active" onclick="showRole('start',this)">Start</button>
-    <button onclick="showRole('patient',this)">Pacjent</button>
-    <button onclick="showRole('driver',this)">Kierowca</button>
-    <button onclick="showRole('admin',this)">Admin</button>
+    <button class="active roleBtn" data-role="start">Start</button>
+    <button class="roleBtn" data-role="patient">Pacjent</button>
+    <button class="roleBtn" data-role="driver">Kierowca</button>
+    <button class="roleBtn" data-role="admin">Admin</button>
   </nav>
 </header>
 
-<section id="start" class="wrap">
-  <div style="text-align:center">
+<section id="start" class="wrap roleView">
+  <div class="hero">
     <h1>OnkoTaxi — pełny funkcjonalny MVP</h1>
-    <p style="color:var(--muted);font-weight:750">Pacjent, kierowca i responsywny panel admina z dokumentami, opiekunem, reklamami i SOS.</p>
+    <p>Pacjent, kierowca i responsywny panel admina z dokumentami, opiekunem, reklamami i SOS.</p>
   </div>
-  <div class="grid3">
-    <div class="card role"><div class="emoji">👤</div><h2>Pacjent</h2><p>Rejestracja, weryfikacja, dokumenty, planowanie z godziną i opiekunem.</p><button class="btn" onclick="showRole('patient')">Otwórz</button></div>
-    <div class="card role"><div class="emoji">🚗</div><h2>Kierowca</h2><p>Online, zlecenia, trasa, SOS i zakończenie.</p><button class="btn" onclick="showRole('driver')">Otwórz</button></div>
-    <div class="card role"><div class="emoji">🧑‍💻</div><h2>Admin</h2><p>Przejazdy, kierowcy, pacjenci, reklamy, płatności, raporty, SOS.</p><button class="btn" onclick="showRole('admin')">Otwórz</button></div>
+  <div class="roleGrid">
+    <div class="role">
+      <div class="proIcon"><svg viewBox="0 0 24 24"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg></div>
+      <h2>Pacjent</h2><p>Rejestracja, weryfikacja, dokumenty, planowanie z godziną i opiekunem.</p>
+      <button class="btn roleCard" data-role="patient">Otwórz</button>
+    </div>
+    <div class="role">
+      <div class="proIcon"><svg viewBox="0 0 24 24"><path d="M3 14l2-5h14l2 5"/><path d="M5 14h14v5H5z"/><circle cx="7.5" cy="19" r="1.5"/><circle cx="16.5" cy="19" r="1.5"/></svg></div>
+      <h2>Kierowca</h2><p>Online, zlecenia, trasa, SOS i zakończenie.</p>
+      <button class="btn roleCard" data-role="driver">Otwórz</button>
+    </div>
+    <div class="role">
+      <div class="proIcon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 22h8"/><path d="M12 18v4"/><path d="M7 9h4M7 13h7"/></svg></div>
+      <h2>Admin</h2><p>Przejazdy, kierowcy, pacjenci, reklamy, płatności, raporty, SOS.</p>
+      <button class="btn roleCard" data-role="admin">Otwórz</button>
+    </div>
   </div>
 </section>
 
-<section id="patient" class="wrap hidden">
+<section id="patient" class="wrap roleView hidden">
   <div class="layout">
     <div class="phone">
       <div class="status"><span>9:41</span><span>●●● Wi‑Fi 97%</span></div>
-      <div class="mhead"><button class="icon">☰</button><div><div class="mlogo">Onko<span>Taxi</span></div><div class="mtag">RAZEM W DRODZE DO ZDROWIA</div></div><button class="icon">☎</button></div>
+      <div class="mhead"><button class="iconBtn"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><div><div class="mlogo">Onko<span>Taxi</span></div><div class="mtag">RAZEM W DRODZE DO ZDROWIA</div></div><button class="iconBtn"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.7 2.6a2 2 0 0 1-.4 2.1L8.1 9.7a16 16 0 0 0 6.2 6.2l1.3-1.3a2 2 0 0 1 2.1-.4c.8.3 1.7.6 2.6.7a2 2 0 0 1 1.7 2z"/></svg></button></div>
       <div class="content">
         <div id="pLanding" class="pScreen">
           <div class="ad car"><small>REKLAMA</small><h3>Nie czekaj.<br>Jedź bezpiecznie.</h3><p>Toyota RAV4 Hybrid</p></div>
-          <p style="text-align:center;color:var(--muted);font-weight:750">Bezpłatny transport dla pacjentów onkologicznych i ich opiekunów.</p>
-          <button class="btn full" onclick="pScreen('pReg1')">Zarejestruj się</button><br><br>
-          <button class="btn secondary full" onclick="pScreen('pHome')">Zaloguj się</button>
+          <p class="muted" style="text-align:center">Bezpłatny transport dla pacjentów onkologicznych i ich opiekunów.</p>
+          <button class="btn full pGo" data-screen="pReg1">Zarejestruj się</button><br><br>
+          <button class="btn secondary full pGo" data-screen="pHome">Zaloguj się</button>
         </div>
 
-        <div id="pReg1" class="pScreen hidden">
-          <h2>Dane pacjenta</h2><div class="progress"><b style="width:25%"></b></div>
-          <div class="field"><label>Imię i nazwisko</label><input value="Jan Kowalski"></div>
-          <div class="field"><label>Data urodzenia</label><input value="12.05.1965"></div>
-          <div class="field"><label>Telefon</label><input value="+48 600 123 456"></div>
-          <div class="field"><label>E-mail</label><input value="jan.kowalski@email.com"></div>
-          <button class="btn full" onclick="pScreen('pReg2')">Dalej</button>
-          <div class="ad health"><small>REKLAMA</small><h3>Onkologia razem</h3><p>Wsparcie pacjenta</p></div>
-        </div>
-
-        <div id="pReg2" class="pScreen hidden">
-          <h2>Opiekun</h2><div class="progress"><b style="width:50%"></b></div>
-          <p style="color:var(--muted)">Osoba do kontaktu w nagłych sytuacjach.</p>
-          <div class="field"><label>Imię i nazwisko opiekuna</label><input value="Anna Kowalska"></div>
-          <div class="field"><label>Telefon opiekuna</label><input value="+48 600 654 321"></div>
-          <div class="field"><label>Relacja</label><input value="Córka"></div>
-          <button class="btn full" onclick="pScreen('pReg3')">Dalej</button>
-        </div>
-
-        <div id="pReg3" class="pScreen hidden">
-          <h2>Dokumenty</h2><div class="progress"><b style="width:75%"></b></div>
-          <div class="card" style="text-align:center;border-style:dashed"><b>☁ Dodaj dokumenty</b><p>PDF, JPG, PNG — maks. 10 MB</p><button class="btn secondary">Wybierz pliki</button></div>
-          <div class="card">📄 Historia choroby.pdf<br>🖼 Wyniki badań.jpg</div>
-          <button class="btn full" onclick="pScreen('pReg4')">Dalej</button>
-          <div class="ad pharma"><small>REKLAMA</small><h3>Apteka partnerska</h3><p>Wsparcie terapii</p></div>
-        </div>
-
-        <div id="pReg4" class="pScreen hidden">
-          <h2>Podsumowanie</h2><div class="progress"><b style="width:100%"></b></div>
-          <div class="card"><b>Pacjent</b><p>Jan Kowalski<br>+48 600 123 456</p><b>Opiekun</b><p>Anna Kowalska · +48 600 654 321</p><b>Dokumenty</b><p>2 pliki</p></div>
-          <label><input type="checkbox" checked> Akceptuję regulamin</label><br>
-          <label><input type="checkbox" checked> Wyrażam zgodę na przetwarzanie danych</label><br><br>
-          <button class="btn full" onclick="pScreen('pVerify')">Wyślij do weryfikacji</button>
-        </div>
-
-        <div id="pVerify" class="pScreen hidden">
-          <div class="success">✉</div><h2 style="text-align:center">Zgłoszenie w weryfikacji</h2>
-          <p style="text-align:center;color:var(--muted)">Po pozytywnej weryfikacji otrzymasz link aktywacyjny.</p>
-          <button class="btn full" onclick="pScreen('pHome')">Symuluj pozytywną weryfikację</button>
-        </div>
-
-        <div id="pHome" class="pScreen hidden">
-          <h2>Witaj, Jan!</h2>
-          <div class="tile green" onclick="pScreen('pPlan1')"><b>▣ Planuj podróż</b><span>›</span></div>
-          <div class="tile red" onclick="createOrder('PILNY')"><b>⏰ Transport pilny</b><span>›</span></div>
-          <div class="tile"><b>Moje przejazdy</b><span>›</span></div>
-          <div class="tile"><b>Profil i dokumenty</b><span>›</span></div>
-          <div class="ad car"><small>REKLAMA</small><h3>Nie czekaj.<br>Jedź bezpiecznie.</h3><p>Toyota RAV4 Hybrid</p></div>
-        </div>
-
-        <div id="pPlan1" class="pScreen hidden">
-          <h2>Skąd i dokąd?</h2><div class="progress"><b style="width:20%"></b></div>
-          <div class="field"><label>Skąd</label><input value="Mielec, ul. Leśna 10"></div>
-          <div class="field"><label>Dokąd</label><input value="Rzeszów, Centrum Onkologii"></div>
-          <button class="btn full" onclick="pScreen('pPlan2')">Dalej</button>
-        </div>
-
-        <div id="pPlan2" class="pScreen hidden">
-          <h2>Data i godzina odbioru</h2><div class="progress"><b style="width:40%"></b></div>
-          <div class="field"><label>Data</label><input type="date" value="2024-05-23"></div>
-          <div class="field"><label>Godzina odbioru z miejsca wskazanego</label><input type="time" value="10:00"></div>
-          <button class="btn full" onclick="pScreen('pPlan3')">Dalej</button>
-          <div class="ad health"><small>REKLAMA</small><h3>Onkologia razem</h3><p>Wsparcie pacjenta</p></div>
-        </div>
-
-        <div id="pPlan3" class="pScreen hidden">
-          <h2>Osoba towarzysząca / opiekun</h2><div class="progress"><b style="width:60%"></b></div>
-          <div class="field"><label>Imię i nazwisko</label><input value="Anna Kowalska"></div>
-          <div class="field"><label>Telefon kontaktowy</label><input value="+48 600 654 321"></div>
-          <div class="field"><label>Czy jedzie z pacjentem?</label><select><option>Tak</option><option>Nie, tylko kontakt telefoniczny</option></select></div>
-          <button class="btn full" onclick="pScreen('pPlan4')">Dalej</button>
-        </div>
-
-        <div id="pPlan4" class="pScreen hidden">
-          <h2>Uwagi i potrzeby</h2><div class="progress"><b style="width:80%"></b></div>
-          <div class="field"><label>Uwagi dla kierowcy</label><textarea>Pacjent potrzebuje pomocy przy wsiadaniu.</textarea></div>
-          <button class="btn full" onclick="pScreen('pPlan5')">Dalej</button>
-        </div>
-
-        <div id="pPlan5" class="pScreen hidden">
-          <h2>Podsumowanie</h2><div class="progress"><b style="width:100%"></b></div>
-          <div class="card"><b>Odbiór</b><p>Mielec, ul. Leśna 10<br>23.05.2024, godz. 10:00</p><b>Cel</b><p>Rzeszów, Centrum Onkologii</p><b>Opiekun</b><p>Anna Kowalska · +48 600 654 321 · jedzie z pacjentem</p></div>
-          <button class="btn full" onclick="createOrder('PLANOWANY')">Potwierdź przejazd</button>
-        </div>
-
-        <div id="pTracking" class="pScreen hidden">
-          <h2>Twój przejazd</h2>
-          <p id="pStatus" style="color:var(--muted);font-weight:800">PRZYPISANY AUTOMATYCZNIE</p>
-          <div class="map"><div class="route"></div><div class="pin"></div><div class="carIcon">🚗</div></div><br>
-          <div class="card"><b>Kierowca</b><p>Piotr Nowak · Toyota RAV4<br>ETA: 12 min</p></div>
-          <div class="ad car"><small>REKLAMA</small><h3>Nie czekaj.<br>Jedź bezpiecznie.</h3><p>Toyota RAV4 Hybrid</p></div>
-        </div>
+        <div id="pReg1" class="pScreen hidden"><h2>Dane pacjenta</h2><div class="progress"><b style="width:25%"></b></div><div class="field"><label>Imię i nazwisko</label><input value="Jan Kowalski"></div><div class="field"><label>Data urodzenia</label><input value="12.05.1965"></div><div class="field"><label>Telefon</label><input value="+48 600 123 456"></div><div class="field"><label>E-mail</label><input value="jan.kowalski@email.com"></div><button class="btn full pGo" data-screen="pReg2">Dalej</button><div class="ad med"><small>REKLAMA</small><h3>Onkologia razem</h3><p>Wsparcie pacjenta</p></div></div>
+        <div id="pReg2" class="pScreen hidden"><h2>Opiekun</h2><div class="progress"><b style="width:50%"></b></div><p class="muted">Osoba do kontaktu w nagłych sytuacjach.</p><div class="field"><label>Imię i nazwisko opiekuna</label><input value="Anna Kowalska"></div><div class="field"><label>Telefon opiekuna</label><input value="+48 600 654 321"></div><div class="field"><label>Relacja</label><input value="Córka"></div><button class="btn full pGo" data-screen="pReg3">Dalej</button></div>
+        <div id="pReg3" class="pScreen hidden"><h2>Dokumenty</h2><div class="progress"><b style="width:75%"></b></div><div class="card" style="text-align:center;border-style:dashed"><b>Dodaj dokumenty medyczne</b><p>PDF, JPG, PNG — maks. 10 MB</p><button class="btn secondary">Wybierz pliki</button></div><div class="card">Historia choroby.pdf<br>Wyniki badań.jpg</div><button class="btn full pGo" data-screen="pReg4">Dalej</button><div class="ad pharma"><small>REKLAMA</small><h3>Apteka partnerska</h3><p>Wsparcie terapii</p></div></div>
+        <div id="pReg4" class="pScreen hidden"><h2>Podsumowanie</h2><div class="progress"><b style="width:100%"></b></div><div class="card"><b>Pacjent</b><p>Jan Kowalski<br>+48 600 123 456</p><b>Opiekun</b><p>Anna Kowalska · +48 600 654 321</p><b>Dokumenty</b><p>2 pliki</p></div><label><input type="checkbox" checked> Akceptuję regulamin</label><br><label><input type="checkbox" checked> Zgoda na przetwarzanie danych</label><br><br><button class="btn full pGo" data-screen="pVerify">Wyślij do weryfikacji</button></div>
+        <div id="pVerify" class="pScreen hidden"><div class="success">✓</div><h2 style="text-align:center">Zgłoszenie w weryfikacji</h2><p class="muted" style="text-align:center">Po pozytywnej weryfikacji otrzymasz link aktywacyjny.</p><button class="btn full pGo" data-screen="pHome">Symuluj aktywację konta</button></div>
+        <div id="pHome" class="pScreen hidden"><h2>Witaj, Jan!</h2><div class="tile green pGo" data-screen="pPlan1"><b>Planuj podróż</b><span>›</span></div><div class="tile red orderBtn" data-type="PILNY"><b>Transport pilny</b><span>›</span></div><div class="tile"><b>Moje przejazdy</b><span>›</span></div><div class="tile"><b>Profil i dokumenty</b><span>›</span></div><div class="ad car"><small>REKLAMA</small><h3>Nie czekaj.<br>Jedź bezpiecznie.</h3><p>Toyota RAV4 Hybrid</p></div></div>
+        <div id="pPlan1" class="pScreen hidden"><h2>Skąd i dokąd?</h2><div class="progress"><b style="width:20%"></b></div><div class="field"><label>Skąd</label><input value="Mielec, ul. Leśna 10"></div><div class="field"><label>Dokąd</label><input value="Rzeszów, Centrum Onkologii"></div><button class="btn full pGo" data-screen="pPlan2">Dalej</button></div>
+        <div id="pPlan2" class="pScreen hidden"><h2>Data i godzina odbioru</h2><div class="progress"><b style="width:40%"></b></div><div class="field"><label>Data</label><input type="date" value="2024-05-23"></div><div class="field"><label>Godzina odbioru z miejsca wskazanego</label><input type="time" value="10:00"></div><button class="btn full pGo" data-screen="pPlan3">Dalej</button><div class="ad med"><small>REKLAMA</small><h3>Onkologia razem</h3><p>Wsparcie pacjenta</p></div></div>
+        <div id="pPlan3" class="pScreen hidden"><h2>Osoba towarzysząca / opiekun</h2><div class="progress"><b style="width:60%"></b></div><div class="field"><label>Imię i nazwisko</label><input value="Anna Kowalska"></div><div class="field"><label>Telefon kontaktowy</label><input value="+48 600 654 321"></div><div class="field"><label>Czy jedzie z pacjentem?</label><select><option>Tak</option><option>Nie, tylko kontakt telefoniczny</option></select></div><button class="btn full pGo" data-screen="pPlan4">Dalej</button></div>
+        <div id="pPlan4" class="pScreen hidden"><h2>Uwagi i potrzeby</h2><div class="progress"><b style="width:80%"></b></div><div class="field"><label>Uwagi dla kierowcy</label><textarea>Pacjent potrzebuje pomocy przy wsiadaniu.</textarea></div><button class="btn full pGo" data-screen="pPlan5">Dalej</button></div>
+        <div id="pPlan5" class="pScreen hidden"><h2>Podsumowanie</h2><div class="progress"><b style="width:100%"></b></div><div class="card"><b>Odbiór</b><p>Mielec, ul. Leśna 10<br>23.05.2024, godz. 10:00</p><b>Cel</b><p>Rzeszów, Centrum Onkologii</p><b>Opiekun</b><p>Anna Kowalska · +48 600 654 321 · jedzie z pacjentem</p></div><button class="btn full orderBtn" data-type="PLANOWANY">Potwierdź przejazd</button></div>
+        <div id="pTracking" class="pScreen hidden"><h2>Twój przejazd</h2><p id="pStatus" class="muted">PRZYPISANY AUTOMATYCZNIE</p><div class="map"><div class="route"></div><div class="pin"></div><div class="carIcon">🚗</div></div><br><div class="card"><b>Kierowca</b><p>Piotr Nowak · Toyota RAV4<br>ETA: 12 min</p></div><div class="ad car"><small>REKLAMA</small><h3>Nie czekaj.<br>Jedź bezpiecznie.</h3><p>Toyota RAV4 Hybrid</p></div></div>
       </div>
-      <div class="bottom"><button class="nav active"><b>⌂</b>Start</button><button class="nav"><b>▣</b>Przejazdy</button><button class="nav"><b>♢</b>Powiadomienia</button><button class="nav"><b>♙</b>Profil</button></div>
+      <div class="bottom"><button class="nav active"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Start</button><button class="nav"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 3v4M16 3v4"/></svg>Przejazdy</button><button class="nav"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 7h18s-3 0-3-7"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Alerty</button><button class="nav"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profil</button></div>
     </div>
-    <div>
-      <h1>Aplikacja pacjenta</h1>
-      <div class="card"><b>Pełny flow:</b><p>Rejestracja → dane pacjenta → opiekun → dokumenty → weryfikacja → home → planowanie z datą, godziną, opiekunem i osobą towarzyszącą → tracking.</p></div>
-      <div class="card"><b>Status:</b><p id="patientStatus">BRAK</p></div>
-    </div>
+    <div><h1>Aplikacja pacjenta</h1><div class="card"><b>Pełny flow:</b><p>Rejestracja → dane pacjenta → opiekun → dokumenty → weryfikacja → home → planowanie z datą, godziną, opiekunem i tracking.</p></div><div class="card"><b>Status:</b><p id="patientStatus">BRAK</p></div></div>
   </div>
 </section>
 
-<section id="driver" class="wrap hidden">
+<section id="driver" class="wrap roleView hidden">
   <div class="layout">
     <div class="phone">
       <div class="status"><span>9:41</span><span>●●● Wi‑Fi 97%</span></div>
-      <div class="mhead"><button class="icon">☰</button><div><div class="mlogo">Onko<span>Taxi</span></div><div class="mtag">KIEROWCA</div></div><button class="icon">☎</button></div>
+      <div class="mhead"><button class="iconBtn"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><div><div class="mlogo">Onko<span>Taxi</span></div><div class="mtag">KIEROWCA</div></div><button class="iconBtn"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3"/></svg></button></div>
       <div class="content">
-        <div id="dLogin" class="dScreen">
-          <h2>Logowanie kierowcy</h2>
-          <div class="field"><label>E-mail</label><input value="piotr.nowak@onkotaxi.pl"></div>
-          <div class="field"><label>Hasło</label><input type="password" value="haslo123"></div>
-          <button class="btn full" onclick="dScreen('dDash')">Zaloguj się</button>
-          <div class="ad car"><small>REKLAMA</small><h3>Nie czekaj.<br>Jedź bezpiecznie.</h3><p>Toyota RAV4 Hybrid</p></div>
-        </div>
-        <div id="dDash" class="dScreen hidden">
-          <h2>Witaj, Piotr!</h2>
-          <div class="card"><b>Status: ONLINE</b><br><br><button class="btn full">Przejdź offline</button></div>
-          <div class="card"><span class="badge red">NOWE</span><h3>Nowe zlecenie</h3><p>Jan Kowalski<br>Mielec → Rzeszów<br>Odbiór: 10:00</p><button class="btn full" onclick="dScreen('dOrder')">Zobacz</button></div>
-        </div>
-        <div id="dOrder" class="dScreen hidden">
-          <h2>Nowe zlecenie</h2>
-          <div class="card"><b>Jan Kowalski</b><p>Odbiór: Mielec, ul. Leśna 10<br>Cel: Rzeszów, Centrum Onkologii<br>Godzina: 10:00<br>Opiekun: Anna Kowalska, +48 600 654 321</p></div>
-          <button class="btn full" onclick="dScreen('dTrip');showSOS()">Przyjmij</button><br><br>
-          <button class="btn gray full" onclick="dScreen('dDash')">Odrzuć</button>
-        </div>
-        <div id="dTrip" class="dScreen hidden">
-          <h2>W trakcie przejazdu</h2>
-          <p style="color:var(--muted);font-weight:800">SOS zawsze widoczny po przyjęciu zlecenia.</p>
-          <div class="map"><div class="route"></div><div class="pin"></div><div class="carIcon">🚗</div></div><br>
-          <button class="btn full" onclick="dScreen('dDone');hideSOS()">Zakończ przejazd</button>
-        </div>
-        <div id="dDone" class="dScreen hidden">
-          <div class="success">✓</div><h2 style="text-align:center">Przejazd zakończony</h2>
-          <button class="btn full" onclick="dScreen('dDash')">Dashboard</button>
-        </div>
+        <div id="dLogin" class="dScreen"><h2>Logowanie kierowcy</h2><div class="field"><label>E-mail</label><input value="piotr.nowak@onkotaxi.pl"></div><div class="field"><label>Hasło</label><input type="password" value="haslo123"></div><button class="btn full dGo" data-screen="dDash">Zaloguj się</button><div class="ad car"><small>REKLAMA</small><h3>Nie czekaj.<br>Jedź bezpiecznie.</h3><p>Toyota RAV4 Hybrid</p></div></div>
+        <div id="dDash" class="dScreen hidden"><h2>Witaj, Piotr!</h2><div class="card"><b>Status: ONLINE</b><br><br><button class="btn full">Przejdź offline</button></div><div class="card"><span class="badge red">NOWE</span><h3>Nowe zlecenie</h3><p>Jan Kowalski<br>Mielec → Rzeszów<br>Odbiór: 10:00</p><button class="btn full dGo" data-screen="dOrder">Zobacz</button></div></div>
+        <div id="dOrder" class="dScreen hidden"><h2>Nowe zlecenie</h2><div class="card"><b>Jan Kowalski</b><p>Odbiór: Mielec, ul. Leśna 10<br>Cel: Rzeszów, Centrum Onkologii<br>Godzina: 10:00<br>Opiekun: Anna Kowalska, +48 600 654 321</p></div><button class="btn full" id="acceptRide">Przyjmij</button><br><br><button class="btn gray full dGo" data-screen="dDash">Odrzuć</button></div>
+        <div id="dTrip" class="dScreen hidden"><h2>W trakcie przejazdu</h2><p class="muted">SOS widoczny po przyjęciu zlecenia.</p><div class="map"><div class="route"></div><div class="pin"></div><div class="carIcon">🚗</div></div><br><button class="btn full" id="finishRide">Zakończ przejazd</button></div>
+        <div id="dDone" class="dScreen hidden"><div class="success">✓</div><h2 style="text-align:center">Przejazd zakończony</h2><button class="btn full dGo" data-screen="dDash">Dashboard</button></div>
       </div>
-      <button id="sosBtn" class="sos" onclick="triggerSOS()">SOS</button>
-      <div class="bottom"><button class="nav active"><b>⌂</b>Start</button><button class="nav"><b>▣</b>Zlecenia</button><button class="nav"><b>♢</b>Alerty</button><button class="nav"><b>♙</b>Profil</button></div>
+      <button id="sosBtn" class="sos">SOS</button>
+      <div class="bottom"><button class="nav active"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Start</button><button class="nav"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/></svg>Zlecenia</button><button class="nav"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0"/></svg>Alerty</button><button class="nav"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/></svg>Profil</button></div>
     </div>
-    <div>
-      <h1>Aplikacja kierowcy</h1>
-      <div class="card">Online, nowe zlecenia, szczegóły pacjenta, kontakt do opiekuna, mapa, SOS i zakończenie przejazdu.</div>
-    </div>
+    <div><h1>Aplikacja kierowcy</h1><div class="card">Online, nowe zlecenia, szczegóły pacjenta, kontakt do opiekuna, mapa, SOS i zakończenie przejazdu.</div></div>
   </div>
 </section>
 
-<section id="admin" class="hidden">
+<section id="admin" class="roleView hidden">
   <div class="admin">
     <aside class="side">
       <div class="logo">Onko<span>Taxi</span></div><div class="tag">ADMIN PANEL</div>
       <div class="menu">
-        <button class="active" onclick="adminTab('aDashboard',this)">Dashboard</button>
-        <button onclick="adminTab('aRides',this)">Przejazdy</button>
-        <button onclick="adminTab('aMap',this)">Mapa live</button>
-        <button onclick="adminTab('aDrivers',this)">Kierowcy</button>
-        <button onclick="adminTab('aPatients',this)">Pacjenci</button>
-        <button onclick="adminTab('aAds',this)">Reklamy</button>
-        <button onclick="adminTab('aPayments',this)">Płatności</button>
-        <button onclick="adminTab('aReports',this)">Raporty</button>
-        <button onclick="adminTab('aUsers',this)">Użytkownicy</button>
-        <button onclick="adminTab('aSOS',this)">SOS alerty</button>
-        <button onclick="adminTab('aSettings',this)">Ustawienia</button>
+        <button class="active adminBtn" data-admin="aDashboard">Dashboard</button><button class="adminBtn" data-admin="aRides">Przejazdy</button><button class="adminBtn" data-admin="aMap">Mapa live</button><button class="adminBtn" data-admin="aDrivers">Kierowcy</button><button class="adminBtn" data-admin="aPatients">Pacjenci</button><button class="adminBtn" data-admin="aAds">Reklamy</button><button class="adminBtn" data-admin="aPayments">Płatności</button><button class="adminBtn" data-admin="aReports">Raporty</button><button class="adminBtn" data-admin="aUsers">Użytkownicy</button><button class="adminBtn" data-admin="aSOS">SOS alerty</button><button class="adminBtn" data-admin="aSettings">Ustawienia</button>
       </div>
     </aside>
     <main class="main">
-      <div id="aDashboard" class="aScreen">
-        <div class="toolbar"><div><h1>Dashboard</h1><p style="color:var(--muted)">Operacje w czasie rzeczywistym</p></div><button class="small">Odśwież</button></div>
-        <div class="kpis"><div class="kpi"><small>Status</small><strong id="adminStatus">BRAK</strong></div><div class="kpi"><small>Kierowca online</small><strong>TAK</strong></div><div class="kpi"><small>Zlecenia</small><strong id="adminOrders">0</strong></div><div class="kpi"><small>SOS</small><strong id="adminSOS">OK</strong></div></div>
-        <div class="dash"><div class="card"><h2>Mapa live</h2><div class="adminMap"><div class="dot" style="left:48%;top:40%">🚗</div><div id="sosDot" class="dot red hidden" style="left:62%;top:50%">!</div></div></div><div class="card"><h2>Ostatnie zdarzenia</h2><table class="table"><tbody><tr><td>10:00</td><td>Zlecenie pacjenta</td><td><span class="badge blue" id="adminStatus2">BRAK</span></td></tr><tr><td>09:50</td><td>Kierowca online</td><td>TAK</td></tr></tbody></table></div></div>
-      </div>
-
-      <div id="aRides" class="aScreen hidden">
-        <div class="toolbar"><div><h1>Przejazdy</h1><p style="color:var(--muted)">Lista przejazdów i zarządzanie statusami</p></div><div class="actions"><button class="small">+ Nowy przejazd</button><button class="small gray">Filtry</button></div></div>
-        <table class="table"><thead><tr><th>ID</th><th>Pacjent</th><th>Odbiór</th><th>Cel</th><th>Godzina</th><th>Opiekun</th><th>Status</th><th>Kierowca</th></tr></thead><tbody><tr><td>#OT-001</td><td>Jan Kowalski</td><td>Mielec, ul. Leśna 10</td><td>Rzeszów</td><td>10:00</td><td>Anna Kowalska</td><td><span class="badge blue" id="rideStatus">BRAK</span></td><td>Piotr Nowak</td></tr><tr><td>#OT-002</td><td>Maria Nowak</td><td>Dębica</td><td>Rzeszów</td><td>12:15</td><td>Paweł Nowak</td><td><span class="badge red">Pilny</span></td><td>Anna Nowak</td></tr></tbody></table>
-      </div>
-
-      <div id="aMap" class="aScreen hidden"><div class="toolbar"><div><h1>Mapa live</h1><p style="color:var(--muted)">Pojazdy i zgłoszenia</p></div></div><div class="dash"><div class="card"><div class="adminMap" style="height:570px"><div class="dot" style="left:46%;top:42%">🚗</div><div class="dot" style="left:35%;top:62%">🚕</div><div class="dot" style="left:70%;top:30%">🚙</div></div></div><div class="card"><h2>Aktywne pojazdy</h2><p><b>Piotr Nowak</b><br>Toyota RAV4</p><hr><p><b>Anna Nowak</b><br>Toyota Corolla</p></div></div></div>
-
-      <div id="aDrivers" class="aScreen hidden"><div class="toolbar"><div><h1>Kierowcy</h1><p style="color:var(--muted)">Dostępność i flota</p></div><button class="small">+ Dodaj kierowcę</button></div><div class="kpis"><div class="kpi"><small>Łącznie</small><strong>40</strong></div><div class="kpi"><small>Online</small><strong>32</strong></div><div class="kpi"><small>Offline</small><strong>8</strong></div><div class="kpi"><small>Niedostępni</small><strong>2</strong></div></div><table class="table"><thead><tr><th>Kierowca</th><th>Pojazd</th><th>Status</th><th>Ocena</th></tr></thead><tbody><tr><td>Piotr Nowak</td><td>Toyota RAV4</td><td><span class="badge">Online</span></td><td>4.9</td></tr><tr><td>Anna Nowak</td><td>Toyota Corolla</td><td><span class="badge">Online</span></td><td>4.8</td></tr></tbody></table></div>
-
-      <div id="aPatients" class="aScreen hidden"><div class="toolbar"><div><h1>Pacjenci</h1><p style="color:var(--muted)">Baza pacjentów i dokumenty</p></div><button class="small">+ Dodaj pacjenta</button></div><div class="dash"><div class="card"><h2>Profil pacjenta</h2><p><b>Jan Kowalski</b><br>+48 600 123 456<br>jan.kowalski@email.com</p><p>Opiekun: Anna Kowalska<br>Dokumenty: Historia choroby.pdf, Wyniki badań.jpg</p></div><div class="card"><h2>Historia przejazdów</h2><table class="table"><tbody><tr><td>23.05</td><td>Mielec → Rzeszów</td><td id="histStatus">BRAK</td></tr></tbody></table></div></div></div>
-
-      <div id="aAds" class="aScreen hidden"><div class="toolbar"><div><h1>Reklamy</h1><p style="color:var(--muted)">Kampanie, placementy i ustawienia</p></div><div class="actions"><button class="small">+ Nowa reklama</button><button class="small gray">Podgląd</button></div></div><div class="kpis"><div class="kpi"><small>Kampanie</small><strong>4</strong></div><div class="kpi"><small>Wyświetlenia</small><strong>45k</strong></div><div class="kpi"><small>Kliknięcia</small><strong>1.2k</strong></div><div class="kpi"><small>CTR</small><strong>2.75%</strong></div></div><div class="dash"><div class="card"><h2>Kampanie</h2><table class="table"><thead><tr><th>Nazwa</th><th>Miejsce</th><th>Status</th><th>CTR</th></tr></thead><tbody><tr><td>Toyota RAV4</td><td>Start / planowanie / tracking</td><td><span class="badge">Aktywna</span></td><td>2.75%</td></tr><tr><td>Onkologia Razem</td><td>Rejestracja / weryfikacja</td><td><span class="badge">Aktywna</span></td><td>2.10%</td></tr></tbody></table></div><div class="card"><h2>Ustawienia reklam</h2><div class="field"><label>Częstotliwość</label><input value="1 reklama / ekran kluczowy"></div><div class="field"><label>Placementy</label><input value="Start, rejestracja, planowanie, tracking"></div><button class="btn">Zapisz ustawienia</button></div></div></div>
-
-      <div id="aPayments" class="aScreen hidden"><div class="toolbar"><div><h1>Płatności</h1><p style="color:var(--muted)">Rozliczenia, zwroty i faktury</p></div></div><div class="kpis"><div class="kpi"><small>Przychód</small><strong>45k</strong></div><div class="kpi"><small>Koszty</small><strong>31k</strong></div><div class="kpi"><small>Zwroty</small><strong>3</strong></div><div class="kpi"><small>Transakcje</small><strong>128</strong></div></div></div>
-
-      <div id="aReports" class="aScreen hidden"><div class="toolbar"><div><h1>Raporty</h1><p style="color:var(--muted)">Analiza operacyjna</p></div></div><div class="kpis"><div class="kpi"><small>Przejazdy</small><strong>428</strong></div><div class="kpi"><small>Planowane</small><strong>312</strong></div><div class="kpi"><small>Pilne</small><strong>116</strong></div><div class="kpi"><small>Śr. czas</small><strong>24m</strong></div></div><div class="card"><h2>Przejazdy w czasie</h2><div class="chart"><div class="bar" style="left:45px;height:60px"></div><div class="bar" style="left:103px;height:90px"></div><div class="bar" style="left:161px;height:76px"></div><div class="bar" style="left:219px;height:130px"></div></div></div></div>
-
-      <div id="aUsers" class="aScreen hidden"><div class="toolbar"><div><h1>Użytkownicy</h1><p style="color:var(--muted)">Role i uprawnienia</p></div><button class="small">+ Dodaj użytkownika</button></div><table class="table"><thead><tr><th>Użytkownik</th><th>Email</th><th>Rola</th><th>Status</th></tr></thead><tbody><tr><td>Admin Systemu</td><td>admin@onkotaxi.pl</td><td>Administrator</td><td><span class="badge">Aktywny</span></td></tr><tr><td>Katarzyna Nowak</td><td>k.nowak@onkotaxi.pl</td><td>Operator</td><td><span class="badge">Aktywny</span></td></tr></tbody></table></div>
-
-      <div id="aSOS" class="aScreen hidden"><div class="toolbar"><div><h1>SOS alerty</h1><p style="color:var(--muted)">Obsługa alarmów kierowcy</p></div></div><div class="card" id="sosPanel">Brak aktywnych alertów SOS</div></div>
-
-      <div id="aSettings" class="aScreen hidden"><div class="toolbar"><div><h1>Ustawienia</h1><p style="color:var(--muted)">Konfiguracja systemu</p></div><button class="small">Zapisz wszystkie</button></div><div class="settings"><div class="card"><h2>Przejazdy</h2><div class="field"><label>Minimalne wyprzedzenie</label><input value="7 dni"></div><div class="field"><label>Auto przypisanie kierowcy</label><input value="Włączone"></div></div><div class="card"><h2>Bezpieczeństwo i reklamy</h2><div class="field"><label>SOS</label><input value="Włączony"></div><div class="field"><label>Moderacja reklam</label><input value="Włączona"></div></div></div></div>
+      <div id="aDashboard" class="aScreen"><div class="toolbar"><div><h1>Dashboard</h1><p class="muted">Operacje w czasie rzeczywistym</p></div><button class="small">Odśwież</button></div><div class="kpis"><div class="kpi"><small>Status</small><strong id="adminStatus">BRAK</strong></div><div class="kpi"><small>Kierowca online</small><strong>TAK</strong></div><div class="kpi"><small>Zlecenia</small><strong id="adminOrders">0</strong></div><div class="kpi"><small>SOS</small><strong id="adminSOS">OK</strong></div></div><div class="dash"><div class="card"><h2>Mapa live</h2><div class="adminMap"><div class="dot" style="left:48%;top:40%">🚗</div><div id="sosDot" class="dot red hidden" style="left:62%;top:50%">!</div></div></div><div class="card"><h2>Ostatnie zdarzenia</h2><table class="table"><tbody><tr><td>10:00</td><td>Zlecenie pacjenta</td><td><span class="badge blue" id="adminStatus2">BRAK</span></td></tr><tr><td>09:50</td><td>Kierowca online</td><td>TAK</td></tr></tbody></table></div></div></div>
+      <div id="aRides" class="aScreen hidden"><div class="toolbar"><div><h1>Przejazdy</h1><p class="muted">Lista przejazdów i zarządzanie statusami</p></div><div class="actions"><button class="small">+ Nowy przejazd</button><button class="small gray">Filtry</button></div></div><table class="table"><thead><tr><th>ID</th><th>Pacjent</th><th>Odbiór</th><th>Cel</th><th>Godzina</th><th>Opiekun</th><th>Status</th><th>Kierowca</th></tr></thead><tbody><tr><td>#OT-001</td><td>Jan Kowalski</td><td>Mielec, ul. Leśna 10</td><td>Rzeszów</td><td>10:00</td><td>Anna Kowalska</td><td><span class="badge blue" id="rideStatus">BRAK</span></td><td>Piotr Nowak</td></tr><tr><td>#OT-002</td><td>Maria Nowak</td><td>Dębica</td><td>Rzeszów</td><td>12:15</td><td>Paweł Nowak</td><td><span class="badge red">Pilny</span></td><td>Anna Nowak</td></tr></tbody></table></div>
+      <div id="aMap" class="aScreen hidden"><div class="toolbar"><div><h1>Mapa live</h1><p class="muted">Pojazdy i zgłoszenia</p></div></div><div class="dash"><div class="card"><div class="adminMap" style="height:570px"><div class="dot" style="left:46%;top:42%">🚗</div><div class="dot" style="left:35%;top:62%">🚕</div><div class="dot" style="left:70%;top:30%">🚙</div></div></div><div class="card"><h2>Aktywne pojazdy</h2><p><b>Piotr Nowak</b><br>Toyota RAV4</p><hr><p><b>Anna Nowak</b><br>Toyota Corolla</p></div></div></div>
+      <div id="aDrivers" class="aScreen hidden"><div class="toolbar"><div><h1>Kierowcy</h1><p class="muted">Dostępność i flota</p></div><button class="small">+ Dodaj kierowcę</button></div><div class="kpis"><div class="kpi"><small>Łącznie</small><strong>40</strong></div><div class="kpi"><small>Online</small><strong>32</strong></div><div class="kpi"><small>Offline</small><strong>8</strong></div><div class="kpi"><small>Niedostępni</small><strong>2</strong></div></div><table class="table"><thead><tr><th>Kierowca</th><th>Pojazd</th><th>Status</th><th>Ocena</th></tr></thead><tbody><tr><td>Piotr Nowak</td><td>Toyota RAV4</td><td><span class="badge">Online</span></td><td>4.9</td></tr><tr><td>Anna Nowak</td><td>Toyota Corolla</td><td><span class="badge">Online</span></td><td>4.8</td></tr></tbody></table></div>
+      <div id="aPatients" class="aScreen hidden"><div class="toolbar"><div><h1>Pacjenci</h1><p class="muted">Baza pacjentów i dokumenty</p></div><button class="small">+ Dodaj pacjenta</button></div><div class="dash"><div class="card"><h2>Profil pacjenta</h2><p><b>Jan Kowalski</b><br>+48 600 123 456<br>jan.kowalski@email.com</p><p>Opiekun: Anna Kowalska<br>Dokumenty: Historia choroby.pdf, Wyniki badań.jpg</p></div><div class="card"><h2>Historia przejazdów</h2><table class="table"><tbody><tr><td>23.05</td><td>Mielec → Rzeszów</td><td id="histStatus">BRAK</td></tr></tbody></table></div></div></div>
+      <div id="aAds" class="aScreen hidden"><div class="toolbar"><div><h1>Reklamy</h1><p class="muted">Kampanie, placementy i ustawienia</p></div><div class="actions"><button class="small">+ Nowa reklama</button><button class="small gray">Podgląd</button></div></div><div class="kpis"><div class="kpi"><small>Kampanie</small><strong>4</strong></div><div class="kpi"><small>Wyświetlenia</small><strong>45k</strong></div><div class="kpi"><small>Kliknięcia</small><strong>1.2k</strong></div><div class="kpi"><small>CTR</small><strong>2.75%</strong></div></div><div class="dash"><div class="card"><h2>Kampanie</h2><table class="table"><thead><tr><th>Nazwa</th><th>Miejsce</th><th>Status</th><th>CTR</th></tr></thead><tbody><tr><td>Toyota RAV4</td><td>Start / planowanie / tracking</td><td><span class="badge">Aktywna</span></td><td>2.75%</td></tr><tr><td>Onkologia Razem</td><td>Rejestracja / weryfikacja</td><td><span class="badge">Aktywna</span></td><td>2.10%</td></tr></tbody></table></div><div class="card"><h2>Ustawienia reklam</h2><div class="field"><label>Częstotliwość</label><input value="1 reklama / ekran kluczowy"></div><div class="field"><label>Placementy</label><input value="Start, rejestracja, planowanie, tracking"></div><button class="btn">Zapisz ustawienia</button></div></div></div>
+      <div id="aPayments" class="aScreen hidden"><div class="toolbar"><div><h1>Płatności</h1><p class="muted">Rozliczenia, zwroty i faktury</p></div></div><div class="kpis"><div class="kpi"><small>Przychód</small><strong>45k</strong></div><div class="kpi"><small>Koszty</small><strong>31k</strong></div><div class="kpi"><small>Zwroty</small><strong>3</strong></div><div class="kpi"><small>Transakcje</small><strong>128</strong></div></div></div>
+      <div id="aReports" class="aScreen hidden"><div class="toolbar"><div><h1>Raporty</h1><p class="muted">Analiza operacyjna</p></div></div><div class="kpis"><div class="kpi"><small>Przejazdy</small><strong>428</strong></div><div class="kpi"><small>Planowane</small><strong>312</strong></div><div class="kpi"><small>Pilne</small><strong>116</strong></div><div class="kpi"><small>Śr. czas</small><strong>24m</strong></div></div><div class="card"><h2>Przejazdy w czasie</h2><div class="chart"><div class="bar" style="left:45px;height:60px"></div><div class="bar" style="left:103px;height:90px"></div><div class="bar" style="left:161px;height:76px"></div><div class="bar" style="left:219px;height:130px"></div></div></div></div>
+      <div id="aUsers" class="aScreen hidden"><div class="toolbar"><div><h1>Użytkownicy</h1><p class="muted">Role i uprawnienia</p></div><button class="small">+ Dodaj użytkownika</button></div><table class="table"><thead><tr><th>Użytkownik</th><th>Email</th><th>Rola</th><th>Status</th></tr></thead><tbody><tr><td>Admin Systemu</td><td>admin@onkotaxi.pl</td><td>Administrator</td><td><span class="badge">Aktywny</span></td></tr><tr><td>Katarzyna Nowak</td><td>k.nowak@onkotaxi.pl</td><td>Operator</td><td><span class="badge">Aktywny</span></td></tr></tbody></table></div>
+      <div id="aSOS" class="aScreen hidden"><div class="toolbar"><div><h1>SOS alerty</h1><p class="muted">Obsługa alarmów kierowcy</p></div></div><div class="card" id="sosPanel">Brak aktywnych alertów SOS</div></div>
+      <div id="aSettings" class="aScreen hidden"><div class="toolbar"><div><h1>Ustawienia</h1><p class="muted">Konfiguracja systemu</p></div><button class="small">Zapisz wszystkie</button></div><div class="settings"><div class="card"><h2>Przejazdy</h2><div class="field"><label>Minimalne wyprzedzenie</label><input value="7 dni"></div><div class="field"><label>Auto przypisanie kierowcy</label><input value="Włączone"></div></div><div class="card"><h2>Bezpieczeństwo i reklamy</h2><div class="field"><label>SOS</label><input value="Włączony"></div><div class="field"><label>Moderacja reklam</label><input value="Włączona"></div></div></div></div>
     </main>
   </div>
 </section>
 
 <script>
-let statusText='BRAK';
-let orders=0;
-let sosActive=false;
-
-function showRole(id,btn){
-  ['start','patient','driver','admin'].forEach(function(x){document.getElementById(x).classList.add('hidden')});
+var statusText='BRAK', orders=0, sosActive=false;
+function setRole(id){
+  document.querySelectorAll('.roleView').forEach(function(el){el.classList.add('hidden')});
   document.getElementById(id).classList.remove('hidden');
-  document.querySelectorAll('.tabs button').forEach(function(b){b.classList.remove('active')});
-  const labels={start:'Start',patient:'Pacjent',driver:'Kierowca',admin:'Admin'};
-  document.querySelectorAll('.tabs button').forEach(function(b){if(b.textContent.trim()===labels[id])b.classList.add('active')});
+  document.querySelectorAll('.roleBtn').forEach(function(b){b.classList.toggle('active', b.dataset.role===id)});
+  window.scrollTo(0,0);
 }
-function pScreen(id){
-  document.querySelectorAll('.pScreen').forEach(function(x){x.classList.add('hidden')});
-  document.getElementById(id).classList.remove('hidden');
-}
-function dScreen(id){
-  document.querySelectorAll('.dScreen').forEach(function(x){x.classList.add('hidden')});
-  document.getElementById(id).classList.remove('hidden');
-}
-function adminTab(id,btn){
-  document.querySelectorAll('.aScreen').forEach(function(x){x.classList.add('hidden')});
-  document.getElementById(id).classList.remove('hidden');
-  document.querySelectorAll('.menu button').forEach(function(b){b.classList.remove('active')});
-  if(btn)btn.classList.add('active');
-}
-function createOrder(type){
-  statusText='PRZYPISANY AUTOMATYCZNIE';
-  orders=1;
-  pScreen('pTracking');
-  updateLive();
-}
-function showSOS(){document.getElementById('sosBtn').classList.add('show')}
-function hideSOS(){document.getElementById('sosBtn').classList.remove('show')}
-function triggerSOS(){
-  sosActive=true;
-  statusText='ALERT SOS — KIEROWCA';
-  updateLive();
-  alert('SOS wysłany do centrali. Przycisk może być połączony z tel:112 w wersji produkcyjnej.');
-}
+function showPatient(id){document.querySelectorAll('.pScreen').forEach(function(el){el.classList.add('hidden')});document.getElementById(id).classList.remove('hidden')}
+function showDriver(id){document.querySelectorAll('.dScreen').forEach(function(el){el.classList.add('hidden')});document.getElementById(id).classList.remove('hidden')}
+function showAdmin(id,btn){document.querySelectorAll('.aScreen').forEach(function(el){el.classList.add('hidden')});document.getElementById(id).classList.remove('hidden');document.querySelectorAll('.adminBtn').forEach(function(b){b.classList.remove('active')});if(btn){btn.classList.add('active')}}
+function createOrder(type){statusText='PRZYPISANY AUTOMATYCZNIE';orders=1;showPatient('pTracking');updateLive()}
 function updateLive(){
-  document.getElementById('patientStatus').textContent=statusText;
-  document.getElementById('pStatus').textContent=statusText;
-  document.getElementById('adminStatus').textContent=statusText;
-  document.getElementById('adminStatus2').textContent=statusText;
-  document.getElementById('rideStatus').textContent=statusText;
-  document.getElementById('histStatus').textContent=statusText;
+  var ids=['patientStatus','pStatus','adminStatus','adminStatus2','rideStatus','histStatus'];
+  ids.forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=statusText});
   document.getElementById('adminOrders').textContent=orders;
   document.getElementById('adminSOS').textContent=sosActive?'ALERT':'OK';
-  if(sosActive){
-    document.getElementById('sosDot').classList.remove('hidden');
-    document.getElementById('sosPanel').innerHTML='<h2 style="color:var(--red)">ALERT SOS</h2><p>Kierowca: Piotr Nowak<br>Pacjent: Jan Kowalski<br>Lokalizacja: ul. Leśna 10, Mielec</p><button class="btn red" onclick="sosActive=false;statusText=\\'SOS OBSŁUŻONY\\';updateLive()">Oznacz jako obsłużony</button>';
-  }else{
-    document.getElementById('sosDot').classList.add('hidden');
-    document.getElementById('sosPanel').textContent='Brak aktywnych alertów SOS';
-  }
+  if(sosActive){document.getElementById('sosDot').classList.remove('hidden');document.getElementById('sosPanel').innerHTML='<h2 style="color:var(--red)">ALERT SOS</h2><p>Kierowca: Piotr Nowak<br>Pacjent: Jan Kowalski<br>Lokalizacja: ul. Leśna 10, Mielec</p><button class="btn red" id="clearSOS">Oznacz jako obsłużony</button>';document.getElementById('clearSOS').addEventListener('click',function(){sosActive=false;statusText='SOS OBSŁUŻONY';updateLive()})}
+  else{document.getElementById('sosDot').classList.add('hidden');document.getElementById('sosPanel').textContent='Brak aktywnych alertów SOS'}
 }
+document.querySelectorAll('.roleBtn,.roleCard').forEach(function(btn){btn.addEventListener('click',function(){setRole(btn.dataset.role)})});
+document.querySelectorAll('.pGo').forEach(function(btn){btn.addEventListener('click',function(){showPatient(btn.dataset.screen)})});
+document.querySelectorAll('.dGo').forEach(function(btn){btn.addEventListener('click',function(){showDriver(btn.dataset.screen)})});
+document.querySelectorAll('.adminBtn').forEach(function(btn){btn.addEventListener('click',function(){showAdmin(btn.dataset.admin,btn)})});
+document.querySelectorAll('.orderBtn').forEach(function(btn){btn.addEventListener('click',function(){createOrder(btn.dataset.type)})});
+document.getElementById('acceptRide').addEventListener('click',function(){statusText='KIEROWCA PRZYJĄŁ ZLECENIE';showDriver('dTrip');document.getElementById('sosBtn').classList.add('show');updateLive()});
+document.getElementById('finishRide').addEventListener('click',function(){statusText='PRZEJAZD ZAKOŃCZONY';showDriver('dDone');document.getElementById('sosBtn').classList.remove('show');updateLive()});
+document.getElementById('sosBtn').addEventListener('click',function(){sosActive=true;statusText='ALERT SOS — KIEROWCA';updateLive();alert('SOS wysłany do centrali. W produkcji można podpiąć tel:112.')});
 updateLive();
 </script>
 </body>
